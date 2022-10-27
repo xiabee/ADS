@@ -1,7 +1,15 @@
 package main
 
-import "ads/secretScan"
+import (
+	"ads/lib"
+	"ads/secretScan"
+	"time"
+)
 
 func main() {
-	secretScan.Trufflehog()
+	urlist := lib.ReadLines("input.txt")
+	for _, url := range urlist {
+		secretScan.Trufflehog(url)
+	}
+	time.Sleep(3 * time.Second)
 }

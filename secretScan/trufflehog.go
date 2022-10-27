@@ -9,8 +9,7 @@ import (
 	"os/exec"
 )
 
-func Trufflehog() {
-	url := "https://github.com/xiabee/security-test.git"
+func Trufflehog(url string) {
 	// target repository
 	cmd := exec.Command("trufflehog", "git", url, "--json")
 	// To check by json mode
@@ -76,24 +75,14 @@ func Trufflehog() {
 		resp = append(resp, tmp)
 	}
 	for _, value := range resp {
-		//fmt.Println(value.SourceMetadata.Data.Git.Repository)
-		//fmt.Println(value.SourceMetadata.Data.Git.File)
-		//fmt.Println(value.SourceMetadata.Data.Git.Commit)
-		//fmt.Println(value.SourceMetadata.Data.Git.Line)
-		//fmt.Println(value.Raw)
-		//fmt.Println(value.Verified)
-		//fmt.Println(value.SourceMetadata.Data.Git.Timestamp)
-		//fmt.Println(value.SourceMetadata.Data.Git.Email)
-		//fmt.Println()
-
-		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Repository)
-		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.File)
-		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Commit)
-		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Line)
-		lib.Log("secretScan.log", value.Raw)
-		lib.Log("secretScan.log", value.Verified)
-		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Timestamp)
-		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Email)
+		lib.Log("secretScan.log", "Repo:\t", value.SourceMetadata.Data.Git.Repository)
+		lib.Log("secretScan.log", "Commit:\t", value.SourceMetadata.Data.Git.Commit)
+		lib.Log("secretScan.log", "File:\t", value.SourceMetadata.Data.Git.File)
+		lib.Log("secretScan.log", "Line:\t", value.SourceMetadata.Data.Git.Line)
+		lib.Log("secretScan.log", "Raw:\t", value.Raw)
+		lib.Log("secretScan.log", "Verified:\t", value.Verified)
+		lib.Log("secretScan.log", "Time:\t", value.SourceMetadata.Data.Git.Timestamp)
+		lib.Log("secretScan.log", "Email:\t", value.SourceMetadata.Data.Git.Email)
 		lib.Log("secretScan.log", "\n")
 	}
 }

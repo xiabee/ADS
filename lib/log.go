@@ -33,11 +33,10 @@ func checkFileIsExist(filename string) bool {
 	return true
 }
 
-func Log(filename string, content any) {
+func Log(filename string, content ...any) (n int, err error) {
 	cmutex.Lock()
 	// creator mutex
 	var f *os.File
-	var err error
 	if checkFileIsExist(filename) {
 		f, err = os.OpenFile(filename, os.O_WRONLY|os.O_APPEND, 0666)
 		// If the file exists, then open it
@@ -54,8 +53,16 @@ func Log(filename string, content any) {
 	wr := &SyncWriter{sync.Mutex{}, f}
 	wg := sync.WaitGroup{}
 	wg.Add(1)
-	fmt.Fprintln(wr, content)
-	fmt.Println(filename, content)
+	for _, x := range content {
+		fmt.Fprint(wr, x)
+		fmt.Print(x)
+		// log to console
+	}
+	fmt.Fprintln(wr)
+	fmt.Println()
+	// log to console
+
 	wg.Done()
 	wg.Wait()
+	return
 }
