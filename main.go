@@ -3,13 +3,21 @@ package main
 import (
 	"ads/lib"
 	"ads/secretScan"
-	"time"
+	"fmt"
+	"sync"
 )
 
 func main() {
+	var wg sync.WaitGroup
 	urlist := lib.ReadLines("input.txt")
+	wg.Add(len(urlist))
+
 	for _, url := range urlist {
-		secretScan.Trufflehog(url)
+		go func() {
+			secretScan.Trufflehog(url)
+			wg.Done()
+		}()
 	}
-	time.Sleep(3 * time.Second)
+	wg.Wait()
+	fmt.Println("Process Finished!")
 }
