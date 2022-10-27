@@ -15,6 +15,8 @@ func main() {
 	for _, url := range urlist {
 		go func() {
 			secretScan.Trufflehog(url)
+			// To scan leaked keys
+			fmt.Println(url, " Done!")
 			wg.Done()
 		}()
 	}
