@@ -6,17 +6,24 @@ Active Defense System for cyber attacks.
 * Author: [xiabee](https://github.com/xiabee),  [PingCAP](https://github.com/pingcap) Security Team
 * Update time: 2022.10.27
 
-* Version: NULL
+* Version: 1.0 (Beta)
+
+
+
+## Current Fuction
+
+* Leaked key scan in GitHub
 
 
 
 ## Changelog
 
-* Add leaked key scan function with [trufflehog](https://github.com/trufflesecurity/trufflehog)
+* Add goroutine
 
 
 
 ## Ongoing
 
-* `Trufflehog` Debuging and Improving
+* Automatic architect design
+* Image design
 
