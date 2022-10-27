@@ -1,6 +1,7 @@
 package secretScan
 
 import (
+	"ads/lib"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -79,8 +80,20 @@ func Trufflehog() {
 		fmt.Println(value.SourceMetadata.Data.Git.File)
 		fmt.Println(value.SourceMetadata.Data.Git.Commit)
 		fmt.Println(value.SourceMetadata.Data.Git.Line)
+		fmt.Println(value.Raw)
+		fmt.Println(value.Verified)
 		fmt.Println(value.SourceMetadata.Data.Git.Timestamp)
 		fmt.Println(value.SourceMetadata.Data.Git.Email)
 		fmt.Println()
+
+		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Repository)
+		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.File)
+		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Commit)
+		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Line)
+		lib.Log("secretScan.log", value.Raw)
+		lib.Log("secretScan.log", value.Verified)
+		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Timestamp)
+		lib.Log("secretScan.log", value.SourceMetadata.Data.Git.Email)
+		lib.Log("secretScan.log", "\n")
 	}
 }
