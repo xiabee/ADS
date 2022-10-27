@@ -1,8 +1,6 @@
 package main
 
-import (
-	"ads/secretScan"
-)
+import "ads/secretScan"
 
 func main() {
 	secretScan.Trufflehog()

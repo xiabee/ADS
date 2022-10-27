@@ -14,13 +14,17 @@ type SyncWriter struct {
 	Writer io.Writer
 }
 
+// Use mutex to avoid writer-conflict
+
 func (w *SyncWriter) Write(b []byte) (n int, err error) {
 	w.m.Lock()
 	defer w.m.Unlock()
 	return w.Writer.Write(b)
 }
 
-// Use mutex to avoid write-conflict
+var cmutex sync.Mutex
+
+// Use mutex to avoid creator-conflict
 
 func checkFileIsExist(filename string) bool {
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
@@ -30,6 +34,8 @@ func checkFileIsExist(filename string) bool {
 }
 
 func Log(filename string, content any) {
+	cmutex.Lock()
+	// creator mutex
 	var f *os.File
 	var err error
 	if checkFileIsExist(filename) {
@@ -42,12 +48,14 @@ func Log(filename string, content any) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	cmutex.Unlock()
 	defer f.Close()
 
 	wr := &SyncWriter{sync.Mutex{}, f}
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	fmt.Fprintln(wr, content)
+	fmt.Println(filename, content)
 	wg.Done()
 	wg.Wait()
 }
