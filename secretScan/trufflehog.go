@@ -58,11 +58,26 @@ func Trufflehog() {
 	// Error output
 	// fmt.Println(string(stdout.Bytes()))
 
-	var resp RESP
-	err = json.Unmarshal(stdout.Bytes(), &resp)
-	if err != nil {
-		fmt.Println("Unmarshal error: ", err)
+	res := bytes.Split(stdout.Bytes(), []byte("\n"))
+	// Use \r\n to split the multi json, maybe unstable when running on the other platform
+	if len(res) > 0 {
+		res = res[:len(res)-1]
 	}
-	fmt.Println(resp.SourceMetadata.Data.Git.Commit)
-	fmt.Println(resp.SourceMetadata.Data.Git.File)
+	// cut off the last null element
+
+	var resp []RESP
+	var tmp RESP
+	for _, value := range res {
+		err = json.Unmarshal(value, &tmp)
+		if err != nil {
+			fmt.Println("Unmarshal error: ", err)
+		}
+
+		resp = append(resp, tmp)
+	}
+	for _, value := range resp {
+		fmt.Println(value.SourceMetadata.Data.Git.File)
+		fmt.Println(value.SourceMetadata.Data.Git.Repository)
+		fmt.Println(value.SourceMetadata.Data.Git.Commit)
+	}
 }
