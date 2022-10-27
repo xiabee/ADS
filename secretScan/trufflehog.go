@@ -11,6 +11,8 @@ import (
 func Trufflehog() {
 	url := "https://github.com/xiabee/security-test.git"
 	// target repository
+	cmd := exec.Command("trufflehog", "git", url, "--json")
+	// To check by json mode
 
 	type GIT struct {
 		Commit     string `json:"commit"`
@@ -41,9 +43,6 @@ func Trufflehog() {
 		StructuredData string `json:"StructuredData"`
 	}
 	// The json format of trufflehog's responses
-
-	cmd := exec.Command("trufflehog", "git", url, "--json")
-	// To check by json mode
 
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout // standard output
@@ -76,8 +75,12 @@ func Trufflehog() {
 		resp = append(resp, tmp)
 	}
 	for _, value := range resp {
-		fmt.Println(value.SourceMetadata.Data.Git.File)
 		fmt.Println(value.SourceMetadata.Data.Git.Repository)
+		fmt.Println(value.SourceMetadata.Data.Git.File)
 		fmt.Println(value.SourceMetadata.Data.Git.Commit)
+		fmt.Println(value.SourceMetadata.Data.Git.Line)
+		fmt.Println(value.SourceMetadata.Data.Git.Timestamp)
+		fmt.Println(value.SourceMetadata.Data.Git.Email)
+		fmt.Println()
 	}
 }
