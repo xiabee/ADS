@@ -49,10 +49,10 @@ func Trufflehog(url string) {
 	cmd.Stderr = &stderr // standard error output
 	err := cmd.Run()
 	if err != nil {
-		log.Fatal("Execution error:  ", err)
+		log.Fatal("Trufflehog Execution error:  ", err)
 	}
 	if stderr.Len() != 0 {
-		log.Fatal("Stderr: ", stderr.Bytes())
+		log.Fatal("Stderr: ", string(stderr.Bytes()))
 	}
 	// Error output
 	// fmt.Println(string(stdout.Bytes()))
