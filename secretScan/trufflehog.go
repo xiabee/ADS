@@ -7,7 +7,24 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"sync"
 )
+
+func KeyScan(filename string) {
+	var wg sync.WaitGroup
+	urlist := lib.ReadLines(filename)
+	wg.Add(len(urlist))
+
+	for _, url := range urlist {
+		go func() {
+			Trufflehog(url)
+			// To scan leaked keys
+			fmt.Println(url, " Done!")
+			wg.Done()
+		}()
+	}
+	wg.Wait()
+}
 
 func Trufflehog(url string) {
 	// target repository
