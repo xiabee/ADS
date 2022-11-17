@@ -14,17 +14,17 @@ func KeyScan(filename string) {
 	var wg sync.WaitGroup
 	urlist := lib.ReadLines(filename)
 	wg.Add(len(urlist))
-
-	for _, url := range urlist {
+	for i := range urlist {
+		url := urlist[i]
 		go func() {
 			Trufflehog(url)
-			// To scan leaked keys
-			fmt.Println(url, " Done!")
 			wg.Done()
 		}()
 	}
 	wg.Wait()
 }
+
+// use goroutine
 
 func Trufflehog(url string) {
 	// target repository
