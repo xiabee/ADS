@@ -3,6 +3,7 @@ package webScan
 import (
 	"ads/lib"
 	"crypto/tls"
+	"strings"
 	"sync"
 	"time"
 )
@@ -29,7 +30,15 @@ func TlsScan(host string) {
 		recover()
 	}()
 	if err != nil {
-		lib.Log("httpsScan.log", "[+] Error: ", host, " ", err)
+		if strings.Contains(err.Error(), "connection refused") {
+			// to check if the host is alive
+			_, errhttp := tls.Dial("tcp", host+":80", nil)
+			if errhttp != nil {
+				lib.Log("httpsScan.log", "[+] Error: ", host, " ", errhttp)
+			}
+		} else {
+			lib.Log("httpsScan.log", "[+] Error: ", host, " ", err)
+		}
 	}
 	cert := conn.ConnectionState().PeerCertificates[0]
 	currentTime := time.Now()
