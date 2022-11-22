@@ -6,6 +6,6 @@ import (
 
 func main() {
 	// secretScan.KeyScan("input.txt")
-	webScan.HttpsScan("input.txt")
+	webScan.HttpsScan("src_domains-cloud.txt")
 	// fmt.Println("Process Finished!")
 }

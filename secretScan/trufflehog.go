@@ -27,6 +27,7 @@ func KeyScan(filename string) {
 // use goroutine
 
 func Trufflehog(url string) {
+	outputFile := "secretScan.log"
 	// target repository
 	cmd := exec.Command("trufflehog", "git", url, "--json")
 	// To check by json mode
@@ -92,14 +93,14 @@ func Trufflehog(url string) {
 		resp = append(resp, tmp)
 	}
 	for _, value := range resp {
-		lib.Log("secretScan.log", "Repo:\t", value.SourceMetadata.Data.Git.Repository)
-		lib.Log("secretScan.log", "Commit:\t", value.SourceMetadata.Data.Git.Commit)
-		lib.Log("secretScan.log", "File:\t", value.SourceMetadata.Data.Git.File)
-		lib.Log("secretScan.log", "Line:\t", value.SourceMetadata.Data.Git.Line)
-		lib.Log("secretScan.log", "Raw:\t", value.Raw)
-		lib.Log("secretScan.log", "Verified:\t", value.Verified)
-		lib.Log("secretScan.log", "Time:\t", value.SourceMetadata.Data.Git.Timestamp)
-		lib.Log("secretScan.log", "Email:\t", value.SourceMetadata.Data.Git.Email)
-		lib.Log("secretScan.log", "\n")
+		lib.Log(outputFile, "Repo:\t", value.SourceMetadata.Data.Git.Repository)
+		lib.Log(outputFile, "Commit:\t", value.SourceMetadata.Data.Git.Commit)
+		lib.Log(outputFile, "File:\t", value.SourceMetadata.Data.Git.File)
+		lib.Log(outputFile, "Line:\t", value.SourceMetadata.Data.Git.Line)
+		lib.Log(outputFile, "Raw:\t", value.Raw)
+		lib.Log(outputFile, "Verified:\t", value.Verified)
+		lib.Log(outputFile, "Time:\t", value.SourceMetadata.Data.Git.Timestamp)
+		lib.Log(outputFile, "Email:\t", value.SourceMetadata.Data.Git.Email)
+		lib.Log(outputFile, "\n")
 	}
 }
