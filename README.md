@@ -18,7 +18,6 @@ In `main.go`, update the code with the correct input files:
 func main() {
 	// secretScan.KeyScan("input.txt")
 	webScan.HttpsScan("src_domains-cloud.txt")
-	//webScan.PortalScan("tidbcloud.com")
 	fmt.Println("Process Finished!")
 }
 ```
@@ -31,6 +30,7 @@ Then go run or go build.
 
 * Leaked key scan in GitHub
 * TLS scan
+* SSH scan
 
 
 
@@ -43,6 +43,5 @@ Then go run or go build.
 
 ## Ongoing
 
-* 22 port scan / SSH scan
 * Multi-func design
 
