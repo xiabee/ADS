@@ -2,10 +2,12 @@ package main
 
 import (
 	"ads/webScan"
+	"fmt"
 )
 
 func main() {
 	// secretScan.KeyScan("input.txt")
 	webScan.HttpsScan("src_domains-cloud.txt")
-	// fmt.Println("Process Finished!")
+	//webScan.PortalScan("tidbcloud.com")
+	fmt.Println("Process Finished!")
 }
