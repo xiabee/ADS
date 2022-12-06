@@ -35,6 +35,11 @@ go build
 
 ### Examples
 
+```bash
+./ads -ssh -f src_ips.txt
+./ads -https -f src_ips.txt
+```
+
 
 
 
@@ -44,17 +49,4 @@ go build
 * Leaked key scan in GitHub
 * TLS scan
 * SSH scan
-
-
-
-## Changelog
-
-* Add goroutine
-* Add TLS Scanning
-
-
-
-## Ongoing
-
-* Multi-func design
 
