@@ -9,18 +9,18 @@ import (
 )
 
 func SSHScan(filename string) {
-	var wg sync.WaitGroup
+	var SSHWg sync.WaitGroup
 	urlist := lib.ReadLines(filename)
-	wg.Add(len(urlist))
+	SSHWg.Add(len(urlist))
 	for i := range urlist {
 		url := urlist[i]
 		go func() {
 			PortScan(url, 22)
 			//scan SSH Port
-			wg.Done()
+			SSHWg.Done()
 		}()
 	}
-	wg.Wait()
+	SSHWg.Wait()
 }
 
 func PortScan(host string, port int) {

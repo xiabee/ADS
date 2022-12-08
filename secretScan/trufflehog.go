@@ -11,17 +11,17 @@ import (
 )
 
 func KeyScan(filename string) {
-	var wg sync.WaitGroup
+	var truffleWg sync.WaitGroup
 	urlist := lib.ReadLines(filename)
-	wg.Add(len(urlist))
+	truffleWg.Add(len(urlist))
 	for i := range urlist {
 		url := urlist[i]
 		go func() {
 			Trufflehog(url)
-			wg.Done()
+			truffleWg.Done()
 		}()
 	}
-	wg.Wait()
+	truffleWg.Wait()
 }
 
 // use goroutine

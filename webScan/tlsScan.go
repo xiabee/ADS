@@ -9,17 +9,17 @@ import (
 )
 
 func HttpsScan(filename string) {
-	var wg sync.WaitGroup
+	var HttpsWg sync.WaitGroup
 	urlist := lib.ReadLines(filename)
-	wg.Add(len(urlist))
+	HttpsWg.Add(len(urlist))
 	for i := range urlist {
 		url := urlist[i]
 		go func() {
 			TlsScan(url)
-			wg.Done()
+			HttpsWg.Done()
 		}()
 	}
-	wg.Wait()
+	HttpsWg.Wait()
 }
 
 // use goroutine
